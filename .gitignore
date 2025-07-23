@@ -1,0 +1,33 @@
+# Composer dependencies
+/vendor/
+/composer.lock
+
+# PHPUnit
+/phpunit.xml
+.phpunit.cache
+
+# PHPStan
+/phpstan.neon
+
+# PHP CodeSniffer
+.phpcs.cache
+
+# Code coverage
+/coverage/
+
+# IDE files
+/.idea/
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# MacOS files
+.DS_Store
+
+# Logs
+*.log
+
+# Other
+.env
+
