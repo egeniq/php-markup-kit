@@ -11,7 +11,10 @@ use MarkupKit\Core\String\AttributeContainer;
 
 readonly class FormatAttributePhrasingNodeParser extends AbstractAttributePhrasingNodeParser
 {
-    public function isPhrasingNodeSupported(DOMElement|DOMText $node): bool
+    /**
+ * @param Context<mixed> $context
+ */
+    public function isPhrasingNodeSupported(DOMElement|DOMText $node, Context $context): bool
     {
         return $node instanceof DOMElement && in_array($node->tagName, ['strong', 'b', 'em', 'i', 'u'], true);
     }

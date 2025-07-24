@@ -11,7 +11,10 @@ use MarkupKit\Core\String\AttributedStringBuilder;
 
 readonly class LineBreakPhrasingNodeParser implements PhrasingNodeParser
 {
-    public function isPhrasingNodeSupported(DOMElement|DOMText $node): bool
+    /**
+ * @param Context<mixed> $context
+ */
+    public function isPhrasingNodeSupported(DOMElement|DOMText $node, Context $context): bool
     {
         return $node instanceof DOMElement && $node->tagName === 'br';
     }

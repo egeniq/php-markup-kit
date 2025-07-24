@@ -13,7 +13,7 @@ readonly class PreformattedFlowNodeParser extends PhrasingContainerFlowNodeParse
         return ['pre', 'code'];
     }
 
-    protected function getStyleForNode(DOMElement $node): Style
+    protected function getStyleForNode(DOMElement $node, Context $context): Style
     {
         return Style::Preformatted;
     }

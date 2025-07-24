@@ -5,6 +5,7 @@ namespace MarkupKit\Standard\Parsers;
 use MarkupKit\Standard\Components\Component;
 use MarkupKit\Standard\Parsers\Flow\ComponentFlowNodeParser;
 use MarkupKit\Standard\Parsers\Flow\HeadingFlowNodeParser;
+use MarkupKit\Standard\Parsers\Flow\ItemListFlowNodeParser;
 use MarkupKit\Standard\Parsers\Flow\PreformattedFlowNodeParser;
 use MarkupKit\Standard\Parsers\Flow\QuoteFlowNodeParser;
 use MarkupKit\Standard\Parsers\Phrasing\FormatAttributePhrasingNodeParser;
@@ -27,6 +28,7 @@ readonly class ComponentBundle extends NodeParserBundle
             new HeadingFlowNodeParser(),
             new PreformattedFlowNodeParser(),
             new QuoteFlowNodeParser(),
+            new ItemListFlowNodeParser(),
             new ComponentFlowNodeParser(),
             // Phrasing
             new TextPhrasingNodeParser(),

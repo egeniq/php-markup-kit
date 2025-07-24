@@ -10,7 +10,10 @@ use MarkupKit\Core\Context;
 
 interface PhrasingNodeParser
 {
-    public function isPhrasingNodeSupported(DOMElement|DOMText $node): bool;
+    /**
+ * @param Context<mixed> $context
+ */
+    public function isPhrasingNodeSupported(DOMElement|DOMText $node, Context $context): bool;
 
     /**
      * @param Context<mixed> $context

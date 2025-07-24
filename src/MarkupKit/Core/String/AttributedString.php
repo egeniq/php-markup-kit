@@ -62,6 +62,11 @@ readonly class AttributedString implements Stringable
         return new AttributedString(array_values($elements));
     }
 
+    public function withoutAttributes(): AttributedString
+    {
+        return new self(array_map(fn ($e) => $e->withoutAttributes(), $this->elements));
+    }
+
     public function __toString(): string
     {
         return new StringEncoder()->encode($this);

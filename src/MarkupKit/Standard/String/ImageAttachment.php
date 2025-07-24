@@ -3,11 +3,12 @@
 namespace MarkupKit\Standard\String;
 
 use MarkupKit\Core\String\Attachment;
+use MarkupKit\Core\String\Attribute;
 use MarkupKit\Core\String\AttributeContainer;
 use MarkupKit\Core\String\Encoder\Html\HtmlElement;
 use MarkupKit\Core\String\Encoder\Markdown\MarkdownElement;
 
-readonly class ImageAttachment extends Attachment implements HtmlElement, MarkdownElement
+final readonly class ImageAttachment extends Attachment implements HtmlElement, MarkdownElement
 {
     public function __construct(
         public string $src,
@@ -41,6 +42,16 @@ readonly class ImageAttachment extends Attachment implements HtmlElement, Markdo
             $alt,
             $this->src,
             $title
+        );
+    }
+
+    public function replacingAttributes(AttributeContainer $attributes): static
+    {
+        return new  self(
+            $this->src,
+            $this->alt,
+            $this->title,
+            $attributes
         );
     }
 }

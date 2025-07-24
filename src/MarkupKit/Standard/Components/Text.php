@@ -8,7 +8,7 @@ use MarkupKit\Core\String\AttributedString;
 readonly class Text implements Component
 {
     public function __construct(
-        public AttributedString $string,
+        public AttributedString $content,
         public Style $style = Style::Body
     ) {
     }

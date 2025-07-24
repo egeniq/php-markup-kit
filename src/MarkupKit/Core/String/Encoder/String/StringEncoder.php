@@ -2,14 +2,14 @@
 
 namespace MarkupKit\Core\String\Encoder\String;
 
-use MarkupKit\Core\String\AttributedElement;
+use MarkupKit\Core\String\AbstractAttributedElement;
 use MarkupKit\Core\String\AttributedString;
 use MarkupKit\Core\String\Encoder\Encoder;
 use Stringable;
 
 readonly class StringEncoder implements Encoder
 {
-    protected function encodeElement(AttributedElement $element): string|AttributedElement
+    protected function encodeElement(AbstractAttributedElement $element): string|AbstractAttributedElement
     {
         if ($element instanceof Stringable) {
             return (string)$element;
@@ -19,7 +19,7 @@ readonly class StringEncoder implements Encoder
     }
 
     /**
-     * @param array<string|AttributedElement> $elements
+     * @param array<string|AbstractAttributedElement> $elements
      */
     protected function joinWithSpaces(array $elements): string
     {

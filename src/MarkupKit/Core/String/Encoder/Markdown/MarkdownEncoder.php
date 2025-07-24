@@ -3,7 +3,7 @@
 namespace MarkupKit\Core\String\Encoder\Markdown;
 
 use MarkupKit\Core\String\AttributeContainer;
-use MarkupKit\Core\String\AttributedElement;
+use MarkupKit\Core\String\AbstractAttributedElement;
 use MarkupKit\Core\String\AttributedString;
 use MarkupKit\Core\String\AttributedSubstring;
 use MarkupKit\Core\String\Encoder\Encoder;
@@ -36,7 +36,7 @@ class MarkdownEncoder implements Encoder
         return $result;
     }
 
-    protected function encodeElement(AttributedElement $element): string
+    protected function encodeElement(AbstractAttributedElement $element): string
     {
         if ($element instanceof AttributedSubstring) {
             return (string)$element;

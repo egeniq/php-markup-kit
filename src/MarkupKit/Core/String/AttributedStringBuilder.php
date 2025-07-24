@@ -34,7 +34,7 @@ class AttributedStringBuilder
         return $string === "\n";
     }
 
-    private function normalizeSpace(string $string, ?AttributedElement $previousElement): string
+    private function normalizeSpace(string $string, ?AbstractAttributedElement $previousElement): string
     {
         if ($this->preserveWhitespace) {
             return $string;

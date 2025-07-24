@@ -10,7 +10,10 @@ use MarkupKit\Core\Context;
   */
 interface FlowNodeParser
 {
-    public function isFlowNodeSupported(DOMElement $node): bool;
+    /**
+     * @param Context<T> $context
+     */
+    public function isFlowNodeSupported(DOMElement $node, Context $context): bool;
 
     /**
      * @param Context<T> $context

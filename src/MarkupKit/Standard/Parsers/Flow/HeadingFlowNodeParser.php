@@ -4,6 +4,7 @@ namespace MarkupKit\Standard\Parsers\Flow;
 
 use DOMElement;
 use InvalidArgumentException;
+use MarkupKit\Core\Context;
 use MarkupKit\Standard\Components\Text\Style;
 
 readonly class HeadingFlowNodeParser extends PhrasingContainerFlowNodeParser
@@ -13,7 +14,7 @@ readonly class HeadingFlowNodeParser extends PhrasingContainerFlowNodeParser
         return ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
     }
 
-    protected function getStyleForNode(DOMElement $node): Style
+    protected function getStyleForNode(DOMElement $node, Context $context): Style
     {
         return match ($node->tagName) {
             'h1' => Style::Heading1,

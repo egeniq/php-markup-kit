@@ -10,7 +10,10 @@ use MarkupKit\Core\String\AttributedStringBuilder;
 
 readonly class TextPhrasingNodeParser implements PhrasingNodeParser
 {
-    public function isPhrasingNodeSupported(DOMElement|DOMText $node): bool
+    /**
+ * @param Context<mixed> $context
+ */
+    public function isPhrasingNodeSupported(DOMElement|DOMText $node, Context $context): bool
     {
         return $node instanceof DOMText;
     }

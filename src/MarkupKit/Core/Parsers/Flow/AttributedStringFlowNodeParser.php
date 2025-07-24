@@ -25,7 +25,7 @@ readonly class AttributedStringFlowNodeParser implements FlowNodeParser
     ) {
     }
 
-    public function isFlowNodeSupported(DOMElement $node): bool
+    public function isFlowNodeSupported(DOMElement $node, Context $context): bool
     {
         return true;
     }

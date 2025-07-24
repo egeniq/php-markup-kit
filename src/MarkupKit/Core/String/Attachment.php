@@ -2,10 +2,6 @@
 
 namespace MarkupKit\Core\String;
 
-readonly abstract class Attachment implements AttributedElement
+readonly abstract class Attachment extends AbstractAttributedElement
 {
-    public function __construct(
-        public AttributeContainer $attributes = new AttributeContainer()
-    ) {
-    }
 }

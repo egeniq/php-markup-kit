@@ -14,7 +14,10 @@ readonly class LinkAttributePhrasingNodeParser extends AbstractAttributePhrasing
 {
     use ParsePhrasingChildNodes;
 
-    public function isPhrasingNodeSupported(DOMElement|DOMText $node): bool
+    /**
+ * @param Context<mixed> $context
+ */
+    public function isPhrasingNodeSupported(DOMElement|DOMText $node, Context $context): bool
     {
         return $node instanceof DOMElement && $node->tagName === 'a';
     }

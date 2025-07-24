@@ -25,12 +25,15 @@ readonly class ComponentFlowNodeParser implements FlowNodeParser
      */
     use ParseNodeGroups;
 
-    public function isFlowNodeSupported(DOMElement $node): bool
+    public function isFlowNodeSupported(DOMElement $node, Context $context): bool
     {
         return true;
     }
 
-    protected function getStyleForNode(DOMElement $node): Style
+    /**
+     * @param Context<Component> $context
+     */
+    protected function getStyleForNode(DOMElement $node, Context $context): Style
     {
         return Style::Body;
     }
@@ -69,7 +72,7 @@ readonly class ComponentFlowNodeParser implements FlowNodeParser
      */
     protected function buildPhrasingContent(AttributedString $string, DOMElement $parent, Context $context): array
     {
-        $style = $this->getStyleForNode($parent);
+        $style = $this->getStyleForNode($parent, $context);
 
         $components = [];
         foreach ($string->splitStringsAndAttachments() as $part) {

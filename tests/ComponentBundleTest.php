@@ -4,6 +4,7 @@ namespace MarkupKit\Tests;
 
 use MarkupKit\Standard\Components\Component;
 use MarkupKit\Standard\Components\Image;
+use MarkupKit\Standard\Components\ItemList;
 use MarkupKit\Standard\Components\Text;
 use MarkupKit\Standard\Parsers\ComponentBundle;
 use MarkupKit\Core\String\AttributedSubstring;
@@ -44,13 +45,45 @@ class ComponentBundleTest extends TestCase
         $this->assertCount(3, $components);
 
         $this->assertInstanceOf(Text::class, $components[0]);
-        $this->assertInstanceOf(AttributedSubstring::class, $components[0]->string->elements[0]);
-        $this->assertEquals('Bold text', $components[0]->string->elements[0]->string);
+        $this->assertInstanceOf(AttributedSubstring::class, $components[0]->content->elements[0]);
+        $this->assertEquals('Bold text', $components[0]->content->elements[0]->string);
 
         $this->assertInstanceOf(Image::class, $components[1]);
         $this->assertEquals('https://example.org/dummy.jpg', $components[1]->src);
         $this->assertEquals('https://example.org/full.jpg', $components[1]->link);
 
         $this->assertInstanceOf(Text::class, $components[2]);
+    }
+
+    public function testWithQuote(): void
+    {
+        $html = '<blockquote>Quoted text</blockquote>';
+        $components = self::$parser->parse($html, self::$options);
+        $this->assertCount(1, $components);
+        $this->assertInstanceOf(Text::class, $components[0]);
+        $this->assertEquals(Text\Style::Quote, $components[0]->style);
+        $this->assertEquals('Quoted text', (string)$components[0]->content);
+    }
+
+    public function testWithPreformatted(): void
+    {
+        $html = '<pre>     Preformatted    text     </pre>';
+        $components = self::$parser->parse($html, self::$options);
+        $this->assertCount(1, $components);
+        $this->assertInstanceOf(Text::class, $components[0]);
+        $this->assertEquals(Text\Style::Preformatted, $components[0]->style);
+        $this->assertEquals('     Preformatted    text     ', (string)$components[0]->content);
+    }
+
+    public function testWithList(): void
+    {
+        $html = '<ul><li>Item 1</li><li>Item 2</li></ul>';
+        $components = self::$parser->parse($html, self::$options);
+        $this->assertCount(1, $components);
+        $this->assertInstanceOf(ItemList::class, $components[0]);
+        $this->assertCount(2, $components[0]->items);
+        $this->assertCount(1, $components[0]->items[0]->content);
+        $this->assertInstanceOf(Text::class, $components[0]->items[0]->content[0]);
+        $this->assertEquals('Item 1', (string)$components[0]->items[0]->content[0]->content);
     }
 }

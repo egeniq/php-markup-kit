@@ -25,10 +25,10 @@ readonly class NodeParserBundle implements FlowNodeParser, PhrasingNodeParser
     ) {
     }
 
-    public function isFlowNodeSupported(DOMElement $node): bool
+    public function isFlowNodeSupported(DOMElement $node, Context $context): bool
     {
         foreach ($this->nodeParsers as $nodeParser) {
-            if ($nodeParser instanceof FlowNodeParser && $nodeParser->isFlowNodeSupported($node)) {
+            if ($nodeParser instanceof FlowNodeParser && $nodeParser->isFlowNodeSupported($node, $context)) {
                 return true;
             }
         }
@@ -44,7 +44,7 @@ readonly class NodeParserBundle implements FlowNodeParser, PhrasingNodeParser
     public function parseFlowNode(DOMElement $node, Context $context): array
     {
         foreach ($this->nodeParsers as $nodeParser) {
-            if ($nodeParser instanceof FlowNodeParser && $nodeParser->isFlowNodeSupported($node)) {
+            if ($nodeParser instanceof FlowNodeParser && $nodeParser->isFlowNodeSupported($node, $context)) {
                 return $nodeParser->parseFlowNode($node, $context);
             }
         }
@@ -52,10 +52,13 @@ readonly class NodeParserBundle implements FlowNodeParser, PhrasingNodeParser
         return [];
     }
 
-    public function isPhrasingNodeSupported(DOMElement|DOMText $node): bool
+    /**
+     * @param Context<mixed> $context
+     */
+    public function isPhrasingNodeSupported(DOMElement|DOMText $node, Context $context): bool
     {
         foreach ($this->nodeParsers as $nodeParser) {
-            if ($nodeParser instanceof PhrasingNodeParser && $nodeParser->isPhrasingNodeSupported($node)) {
+            if ($nodeParser instanceof PhrasingNodeParser && $nodeParser->isPhrasingNodeSupported($node, $context)) {
                 return true;
             }
         }
@@ -70,7 +73,7 @@ readonly class NodeParserBundle implements FlowNodeParser, PhrasingNodeParser
         Context $context
     ): void {
         foreach ($this->nodeParsers as $nodeParser) {
-            if ($nodeParser instanceof PhrasingNodeParser && $nodeParser->isPhrasingNodeSupported($node)) {
+            if ($nodeParser instanceof PhrasingNodeParser && $nodeParser->isPhrasingNodeSupported($node, $context)) {
                 $nodeParser->parsePhrasingNode($node, $stringBuilder, $attributes, $context);
                 return;
             }

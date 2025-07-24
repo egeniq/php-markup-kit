@@ -3,6 +3,7 @@
 namespace MarkupKit\Standard\Parsers\Flow;
 
 use DOMElement;
+use MarkupKit\Core\Context;
 use MarkupKit\Standard\Components\Text\Style;
 
 readonly class QuoteFlowNodeParser extends PhrasingContainerFlowNodeParser
@@ -12,7 +13,7 @@ readonly class QuoteFlowNodeParser extends PhrasingContainerFlowNodeParser
         return ['blockquote', 'q'];
     }
 
-    protected function getStyleForNode(DOMElement $node): Style
+    protected function getStyleForNode(DOMElement $node, Context $context): Style
     {
         return Style::Quote;
     }

@@ -60,7 +60,7 @@ $components = $parser->parse('<strong>Hello World!</strong> <img src="https://pi
 assert(count($components) === 2);
 
 assert($components[0] instanceof Components\Text);
-$string = $components[0]->string;
+$string = $components[0]->content;
 assert(count($string->elements) === 1);
 assert($string->elements[0] instanceof AttributedSubstring);
 assert($string->elements[0]->string === 'Hello World!');
