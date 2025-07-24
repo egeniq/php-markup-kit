@@ -5,21 +5,18 @@ namespace MarkupKit\Core\String;
 class AttributedStringBuilder
 {
     /**
-     * @var AttributedElement[]
+     * @var array<AttributedSubstring|Attachment>
      */
     private array $elements = [];
 
-    public readonly bool $trimWhitespaceAroundAttachments;
-
     /**
      * @param bool $preserveWhitespace Whether to preserve whitespace in the string. Setting this to false will normalize whitespace.
-     * @param ?bool $trimWhitespaceAroundAttachments Whether to trim whitespace around attachments. Defaults to the opposite of $preserveWhitespace.
+     * @param bool $trimWhitespaceAroundAttachments Whether to trim whitespace around attachments.
      */
     public function __construct(
         public readonly bool $preserveWhitespace = false,
-        ?bool $trimWhitespaceAroundAttachments = null
+        public readonly bool $trimWhitespaceAroundAttachments = false
     ) {
-        $this->trimWhitespaceAroundAttachments = $trimWhitespaceAroundAttachments ?? !$preserveWhitespace;
     }
 
     private function startsWithWhitespace(string $string): bool
@@ -73,7 +70,7 @@ class AttributedStringBuilder
     }
 
     /**
-     * @return AttributedElement[]
+     * @return array<AttributedSubstring|Attachment>
      */
     private function normalizeTrailingSpace(): array
     {

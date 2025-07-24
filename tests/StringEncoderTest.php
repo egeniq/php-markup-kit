@@ -2,7 +2,7 @@
 
 namespace MarkupKit\Tests;
 
-use MarkupKit\Basic\Node\StringBundle;
+use MarkupKit\Standard\Parsers\StringBundle;
 use MarkupKit\Core\String\AttributedString;
 use MarkupKit\Core\Options;
 use MarkupKit\Core\Parser;
@@ -11,15 +11,17 @@ use PHPUnit\Framework\TestCase;
 
 class StringEncoderTest extends TestCase
 {
-    /**
-     * @var Parser<AttributedString>
-     */
     private static Parser $parser;
+
+    /**
+     * @var Options<AttributedString>
+     */
+    private static Options $options;
 
     public static function setUpBeforeClass(): void
     {
-        $options = new Options(nodeParsers: [new StringBundle()]);
-        self::$parser = new Parser(options: $options);
+        self::$parser = new Parser();
+        self::$options = new Options(nodeParsers: [new StringBundle()]);
     }
 
     /**
@@ -45,7 +47,7 @@ class StringEncoderTest extends TestCase
     #[DataProvider('encodingDataProvider')]
     public function testEncoding(string $input, string $expectedOutput): void
     {
-        $components = self::$parser->parse($input);
+        $components = self::$parser->parse($input, self::$options);
         $this->assertCount(1, $components);
         $output = (string)$components[0];
         $this->assertEquals($expectedOutput, $output);

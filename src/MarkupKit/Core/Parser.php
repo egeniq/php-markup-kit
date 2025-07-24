@@ -3,40 +3,10 @@
 namespace MarkupKit\Core;
 
 use DOMElement;
-use DOMText;
-use MarkupKit\Core\String\AttributeContainer;
-use MarkupKit\Core\String\AttributedStringBuilder;
 use Masterminds\HTML5;
 
-/**
- * @template T
- */
 class Parser
 {
-    /**
-     * @param Options<T> $options
-     */
-    public function __construct(
-        public Options $options
-    ) {
-    }
-
-    /**
-     * @return T[]
-     */
-    public function parseFlowNode(DOMElement $node): array
-    {
-        return $this->options->nodeParsers->parseFlowNode($node, $this);
-    }
-
-    public function parsePhrasingNode(
-        DOMElement|DOMText $node,
-        AttributedStringBuilder $stringBuilder,
-        AttributeContainer $attributes
-    ): void {
-        $this->options->nodeParsers->parsePhrasingNode($node, $stringBuilder, $attributes, $this);
-    }
-
     private function parseHtml(string $html): ?DOMElement
     {
         $parser = new HTML5(['disable_html_ns' => true]);
@@ -45,10 +15,16 @@ class Parser
     }
 
     /**
+     * @param Context<T>|Options<T> $contextOrOptions
+     *
      * @return T[]
+     *
+     * @template T
      */
-    public function parse(DOMElement|string $input): array
+    public function parse(DOMElement|string $input, Context|Options $contextOrOptions): array
     {
+        $context = $contextOrOptions instanceof Context ? $contextOrOptions : new Context($contextOrOptions);
+
         if (is_string($input)) {
             $input = $this->parseHtml($input);
             if ($input === null) {
@@ -56,6 +32,6 @@ class Parser
             }
         }
 
-        return $this->options->nodeParsers->parseFlowNode($input, $this);
+        return $context->parseFlowNode($input);
     }
 }

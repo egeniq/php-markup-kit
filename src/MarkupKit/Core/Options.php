@@ -2,11 +2,11 @@
 
 namespace MarkupKit\Core;
 
-use MarkupKit\Core\Node\Flow\FlowNodeParser;
-use MarkupKit\Core\Node\NodeParserBundle;
-use MarkupKit\Core\Node\Phrasing\DefaultPhrasingNodePolicy;
-use MarkupKit\Core\Node\Phrasing\PhrasingNodeParser;
-use MarkupKit\Core\Node\Phrasing\PhrasingNodePolicy;
+use MarkupKit\Core\Parsers\Flow\FlowNodeParser;
+use MarkupKit\Core\Parsers\NodeParserBundle;
+use MarkupKit\Core\Parsers\Phrasing\DefaultPhrasingNodePolicy;
+use MarkupKit\Core\Parsers\Phrasing\PhrasingNodeParser;
+use MarkupKit\Core\Parsers\Phrasing\PhrasingNodePolicy;
 
 /**
  * @template T
