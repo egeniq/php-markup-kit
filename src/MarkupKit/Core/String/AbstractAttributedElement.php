@@ -2,6 +2,8 @@
 
 namespace MarkupKit\Core\String;
 
+use UnitEnum;
+
 abstract readonly class AbstractAttributedElement implements AttributedElement
 {
     public function __construct(
@@ -13,6 +15,16 @@ abstract readonly class AbstractAttributedElement implements AttributedElement
     {
         return $this->replacingAttributes(
             $this->attributes->withAttribute($attribute)
+        );
+    }
+
+    /**
+     * @param class-string<Attribute>|(Attribute&UnitEnum) $attribute
+     */
+    public function withoutAttribute(string|Attribute $attribute): static
+    {
+        return $this->replacingAttributes(
+            $this->attributes->withoutAttribute($attribute)
         );
     }
 

@@ -41,7 +41,7 @@ class MarkdownEncoderTest extends TestCase
             ['<strong>Bold <em>and italic</em> text</strong>', '**Bold *and italic* text**'],
             ['<p>Paragraph with <strong>bold</strong> and <em>italic</em> text.</p>', 'Paragraph with **bold** and *italic* text.'],
             ['<div><span>Nested span text</span></div>', 'Nested span text'],
-            ["Text with extra    spaces and\n such <b> within  tags  </b> but outside   as\n well", 'Text with extra spaces and such **within tags **but outside as well'],
+            ["Text with extra    spaces and\n such <b> within  tags  </b> but outside   as\n well", 'Text with extra spaces and such **within tags** but outside as well'],
             ['<u>Underlined text</u>', '__Underlined text__'],
             ['<p><a href="https://example.com">Link</a></p>', '[Link](https://example.com)'],
             ['<img src="image.jpg" alt="Image">', '![Image](image.jpg)'],

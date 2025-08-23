@@ -41,6 +41,18 @@ readonly class AttributeContainer implements IteratorAggregate, Countable
         return new self($attributes);
     }
 
+
+    /**
+     * @param class-string<Attribute>|(Attribute&UnitEnum) $attribute
+     * @return self
+     */
+    public function withoutAttribute(string|Attribute $attribute): self
+    {
+        return $this->filterAttributes(
+            fn (Attribute $attr) => $attribute instanceof Attribute ? $attr !== $attribute : !is_a($attr, $attribute)
+        );
+    }
+
     /**
      * Check if the container contains a specific attribute, or one or more attributes of a specific type.
      *
@@ -93,15 +105,15 @@ readonly class AttributeContainer implements IteratorAggregate, Countable
     /**
      * @param class-string<Attribute>|(callable(Attribute $attribute): bool) $filter
      *
-     * @return Attribute[]
+     * @return self
      */
-    public function filterAttributes(string|callable $filter): array
+    public function filterAttributes(string|callable $filter): self
     {
         if (is_string($filter)) {
             $filter = fn (Attribute $attr) => $attr instanceof $filter;
         }
 
-        return array_filter($this->attributes, $filter);
+        return new self(array_filter($this->attributes, $filter));
     }
 
     public function getIterator(): Traversable
@@ -114,13 +126,31 @@ readonly class AttributeContainer implements IteratorAggregate, Countable
         return count($this->attributes);
     }
 
+    public function isEmpty(): bool
+    {
+        return empty($this->attributes);
+    }
+
     public function diff(self $other): AttributeContainer
     {
-        return new self(array_filter($this->attributes, fn ($a) => !in_array($a, $other->attributes, true)));
+        return $this->filterAttributes(fn (Attribute $attr) => !in_array($attr, $other->attributes, true));
     }
 
     public function reversed(): AttributeContainer
     {
         return new self(array_reverse($this->attributes));
+    }
+
+    public function equals(AttributeContainer $other): bool
+    {
+        if ($this === $other) {
+            return true;
+        }
+
+        if (count($this->attributes) !== count($other->attributes)) {
+            return false;
+        }
+
+        return $this->diff($other)->isEmpty() && $other->diff($this)->isEmpty();
     }
 }

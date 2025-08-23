@@ -3,16 +3,33 @@
 namespace MarkupKit\Core\String;
 
 use MarkupKit\Core\String\Encoder\String\StringEncoder;
+use MarkupKit\Core\String\Internal\Traits\OptimizeElements;
 use Stringable;
+use UnitEnum;
 
 readonly class AttributedString implements Stringable
 {
+    use OptimizeElements;
+
+    /**
+     * @var array<AttributedSubstring|Attachment>
+     */
+    public array $elements;
+
     /**
      * @param array<AttributedSubstring|Attachment> $elements
      */
     public function __construct(
-        public array $elements = []
+        array $elements = []
     ) {
+        $this->elements = $this->optimizeElements($elements);
+    }
+
+    public static function fromString(
+        string $string,
+        AttributeContainer $attributes = new AttributeContainer()
+    ): AttributedString {
+        return new AttributedString([new AttributedSubstring($string, $attributes)]);
     }
 
     public function isEmpty(): bool
@@ -65,6 +82,63 @@ readonly class AttributedString implements Stringable
     public function withoutAttributes(): AttributedString
     {
         return new self(array_map(fn ($e) => $e->withoutAttributes(), $this->elements));
+    }
+
+    /**
+     * @param class-string<Attribute>|(Attribute&UnitEnum) $attribute
+     */
+    public function withoutAttribute(string|Attribute $attribute): AttributedString
+    {
+        return new self(array_map(fn ($e) => $e->withoutAttribute($attribute), $this->elements));
+    }
+
+    /**
+     * @param string|(callable(string[] $match, AttributeContainer $attributes): (string|AttributedSubstring|Attachment|AttributedString)) $replace
+     * @return self
+     */
+    public function replace(string $search, string|callable $replace): AttributedString
+    {
+        $elements = [];
+
+        foreach ($this->elements as $element) {
+            if (!($element instanceof AttributedSubstring)) {
+                $elements[] = $element;
+                continue;
+            }
+
+            array_push($elements, ...$element->replace($search, $replace));
+        }
+
+
+        if ($this->elements === $elements) {
+            return $this;
+        }
+
+        return new self($elements);
+    }
+
+    /**
+     * @param string|(callable(string[] $match, AttributeContainer $attributes): (string|AttributedSubstring|Attachment|AttributedString)) $replace
+     * @return self
+     */
+    public function replaceMatches(string $regex, string|callable $replace): AttributedString
+    {
+        $elements = [];
+
+        foreach ($this->elements as $element) {
+            if (!($element instanceof AttributedSubstring)) {
+                $elements[] = $element;
+                continue;
+            }
+
+            array_push($elements, ...$element->replaceMatches($regex, $replace));
+        }
+
+        if ($this->elements === $elements) {
+            return $this;
+        }
+
+        return new AttributedString($elements);
     }
 
     public function __toString(): string

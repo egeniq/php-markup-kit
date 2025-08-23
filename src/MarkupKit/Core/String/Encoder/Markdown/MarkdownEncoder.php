@@ -49,6 +49,19 @@ class MarkdownEncoder implements Encoder
         return '';
     }
 
+    /**
+     * @return array{0: string, 1: string}
+     */
+    private function splitTrailingWhitespace(string $text): array
+    {
+        if (preg_match('/\s+$/', $text, $matches)) {
+            $trailingSpaces = $matches[0];
+            return [substr($text, 0, -strlen($trailingSpaces)), $trailingSpaces];
+        }
+
+        return [$text, ''];
+    }
+
     public function encode(AttributedString $string): string
     {
         $result = '';
@@ -67,7 +80,10 @@ class MarkdownEncoder implements Encoder
             }
 
             $attrsToClose = $previous === null ? new AttributeContainer() : $previous->attributes->diff($current->attributes);
-            $result .= $this->closeAttributes($attrsToClose);
+            if (!$attrsToClose->isEmpty()) {
+                [$result, $trailingWhitespace] = $this->splitTrailingWhitespace($result);
+                $result .= $this->closeAttributes($attrsToClose) . $trailingWhitespace;
+            }
 
             $attrsToOpen = $previous === null ? $current->attributes : $current->attributes->diff($previous->attributes);
             $result .= $this->openAttributes($attrsToOpen);
@@ -77,8 +93,9 @@ class MarkdownEncoder implements Encoder
             $previous = $current;
         }
 
-        if ($previous !== null) {
-            $result .= $this->closeAttributes($previous->attributes);
+        if ($previous !== null && !$previous->attributes->isEmpty()) {
+            [$result, $trailingWhitespace] = $this->splitTrailingWhitespace($result);
+            $result .= $this->closeAttributes($previous->attributes) . $trailingWhitespace;
         }
 
         return $result;

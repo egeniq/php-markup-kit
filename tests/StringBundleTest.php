@@ -84,18 +84,14 @@ class StringBundleTest extends TestCase
     {
         $html = " What happens \t when <strong> we have  \n </strong> lots   of &nbsp;spacing<br> and some text after an explicit linebreak\n\n";
         $string = $this->parseAttributedString($html);
-        $this->assertCount(5, $string->elements);
+        $this->assertCount(3, $string->elements);
 
         $this->assertInstanceOf(AttributedSubstring::class, $string->elements[0]);
         $this->assertEquals('What happens when ', $string->elements[0]->string);
         $this->assertInstanceOf(AttributedSubstring::class, $string->elements[1]);
         $this->assertEquals('we have ', $string->elements[1]->string);
         $this->assertInstanceOf(AttributedSubstring::class, $string->elements[2]);
-        $this->assertEquals('lots of  spacing', $string->elements[2]->string);
-        $this->assertInstanceOf(AttributedSubstring::class, $string->elements[3]);
-        $this->assertEquals("\n", $string->elements[3]->string);
-        $this->assertInstanceOf(AttributedSubstring::class, $string->elements[4]);
-        $this->assertEquals(" and some text after an explicit linebreak", $string->elements[4]->string);
+        $this->assertEquals("lots of  spacing\n and some text after an explicit linebreak", $string->elements[2]->string);
     }
 
     public function testLink(): void

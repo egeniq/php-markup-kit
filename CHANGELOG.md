@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.3 - 2025-08-23
+- Added `replace` and `replaceMatches` methods to `AttributedString` for replacing substrings and regex matches within
+  attributed (sub-)strings.
+- Added `withoutAttribute` method to `AttributedString` for removing specific attributes from the string.
+- Added static `fromString` method to `AttributedString` for creating an attributed string from a plain string.
+- Fixed an issue in `MarkdownEncoder` where trailing whitespace was not properly handled.
+
 ## v1.2 - 2025-07-24
 - Added ability to strip attributes from attributed strings.
 - `Context` is now provided at more places in the parser.
