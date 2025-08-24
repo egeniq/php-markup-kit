@@ -14,7 +14,7 @@ class AttributedStringBuilder
      * @param bool $trimWhitespaceAroundAttachments Whether to trim whitespace around attachments.
      */
     public function __construct(
-        public readonly bool $preserveWhitespace = false,
+        public readonly bool $preserveWhitespace = true,
         public readonly bool $trimWhitespaceAroundAttachments = false
     ) {
     }
@@ -104,7 +104,10 @@ class AttributedStringBuilder
         return $elements;
     }
 
-    public function appendString(string $string, AttributeContainer $attributes): void
+    /**
+     * @param AttributeContainer|array<int, Attribute> $attributes
+     */
+    public function appendString(string $string, AttributeContainer|array $attributes = []): void
     {
         $string = $this->normalizeSpace($string, end($this->elements) ?: null);
         if (strlen($string) === 0) {
@@ -114,7 +117,10 @@ class AttributedStringBuilder
         $this->elements[] = new AttributedSubstring($string, $attributes);
     }
 
-    public function appendLineBreak(AttributeContainer $attributes): void
+    /**
+     * @param AttributeContainer|array<int, Attribute> $attributes
+     */
+    public function appendLineBreak(AttributeContainer|array $attributes = []): void
     {
         $this->elements[] = new AttributedSubstring("\n", $attributes);
     }

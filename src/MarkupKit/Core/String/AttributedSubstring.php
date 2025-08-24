@@ -9,9 +9,12 @@ final readonly class AttributedSubstring extends AbstractAttributedElement imple
 {
     use OptimizeElements;
 
+    /**
+     * @param AttributeContainer|array<int, Attribute> $attributes
+     */
     public function __construct(
         public string $string,
-        AttributeContainer $attributes
+        AttributeContainer|array $attributes = []
     ) {
         parent::__construct($attributes);
     }

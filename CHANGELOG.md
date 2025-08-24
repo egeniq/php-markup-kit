@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.3.1 - 2025-08-24
+- Improved usability of `AttributedStringBuilder` outside parser context.
+
 ## v1.3 - 2025-08-23
 - Added `replace` and `replaceMatches` methods to `AttributedString` for replacing substrings and regex matches within
   attributed (sub-)strings.

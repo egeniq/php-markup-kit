@@ -10,11 +10,14 @@ use MarkupKit\Core\String\Encoder\Markdown\MarkdownElement;
 
 final readonly class ImageAttachment extends Attachment implements HtmlElement, MarkdownElement
 {
+    /**
+     * @param AttributeContainer|array<int, Attribute> $attributes
+     */
     public function __construct(
         public string $src,
         public ?string $alt,
         public ?string $title,
-        AttributeContainer $attributes
+        AttributeContainer|array $attributes
     ) {
         parent::__construct($attributes);
     }

@@ -22,7 +22,7 @@ trait ParsePhrasingNodeGroup
         DOMElement|DOMText $node,
         Context $context
     ): AttributedStringBuilder {
-        return new AttributedStringBuilder();
+        return new AttributedStringBuilder(preserveWhitespace: false, trimWhitespaceAroundAttachments: false);
     }
 
     /**

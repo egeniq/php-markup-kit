@@ -6,9 +6,15 @@ use UnitEnum;
 
 abstract readonly class AbstractAttributedElement implements AttributedElement
 {
+    public AttributeContainer $attributes;
+
+    /**
+     * @param AttributeContainer|array<int, Attribute> $attributes
+     */
     public function __construct(
-        public AttributeContainer $attributes = new AttributeContainer()
+        AttributeContainer|array $attributes = []
     ) {
+        $this->attributes = $attributes instanceof AttributeContainer ? $attributes : new AttributeContainer($attributes);
     }
 
     public function withAttribute(Attribute $attribute): static
