@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.3.2 - 2025-08-25
+- Improved `AttributedStringBuilder` by giving it a more fluent interface.
+
 ## v1.3.1 - 2025-08-24
 - Improved usability of `AttributedStringBuilder` outside parser context.
 

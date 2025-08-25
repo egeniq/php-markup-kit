@@ -107,35 +107,39 @@ class AttributedStringBuilder
     /**
      * @param AttributeContainer|array<int, Attribute> $attributes
      */
-    public function appendString(string $string, AttributeContainer|array $attributes = []): void
+    public function appendString(string $string, AttributeContainer|array $attributes = []): self
     {
         $string = $this->normalizeSpace($string, end($this->elements) ?: null);
         if (strlen($string) === 0) {
-            return;
+            return $this;
         }
 
         $this->elements[] = new AttributedSubstring($string, $attributes);
+        return $this;
     }
 
     /**
      * @param AttributeContainer|array<int, Attribute> $attributes
      */
-    public function appendLineBreak(AttributeContainer|array $attributes = []): void
+    public function appendLineBreak(AttributeContainer|array $attributes = []): self
     {
         $this->elements[] = new AttributedSubstring("\n", $attributes);
+        return $this;
     }
 
-    public function appendAttachment(Attachment $attachment): void
+    public function appendAttachment(Attachment $attachment): self
     {
         if (!$this->trimWhitespaceAroundAttachments) {
             $this->elements[] = $attachment;
-            return;
+            return $this;
         }
 
         $this->elements = [
             ...$this->normalizeTrailingSpace(),
             $attachment
         ];
+
+        return $this;
     }
 
     public function isEmpty(): bool

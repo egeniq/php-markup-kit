@@ -44,7 +44,6 @@ readonly class AttributeContainer implements IteratorAggregate, Countable
 
     /**
      * @param class-string<Attribute>|(Attribute&UnitEnum) $attribute
-     * @return self
      */
     public function withoutAttribute(string|Attribute $attribute): self
     {
